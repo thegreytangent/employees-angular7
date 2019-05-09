@@ -1,0 +1,30 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "jason",
+      "gender": "male",
+      "email": "test@yahoo.com",
+      "phone": "09454454",
+      "contactPreference":"phone",
+      "contactPerson": "John",
+      "dateOfBirth": "10/25/1998",
+      "department": 1,
+      "isActive": true,
+      "photoPath": "assets/images/mark.png" 
+    },
+    {
+      "id": 2,
+      "name": "Maria",
+      "gender": "female",
+      "email": "test@yahoo.com",
+      "phone": "09454454",
+      "contactPreference":"email",
+      "contactPerson": "John",
+      "dateOfBirth": "10/25/1998",
+      "department": 2,
+      "isActive": true,
+      "photoPath": "assets/images/john.png" 
+    }
+  ]
+}
