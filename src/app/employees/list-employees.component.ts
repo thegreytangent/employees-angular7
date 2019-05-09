@@ -3,6 +3,7 @@ import { Employees } from '../models/employee.model';
 // import { EmployeeService } from '../employees/employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { query } from '@angular/core/src/render3';
+import { ResolveEmployeeList } from './resolved-employeelist.model';
 
 @Component({
   // selector: 'app-list-employees',
@@ -15,6 +16,7 @@ export class ListEmployeesComponent implements OnInit {
   public employeeToDisplay: Employees;
   // private arrayIndex = 1;
   public dataFromChild : Employees;
+  error: string;
 
    filteredEmployees : Employees[];
 
@@ -39,7 +41,15 @@ export class ListEmployeesComponent implements OnInit {
     private _route: ActivatedRoute, 
     // private employeeService: EmployeeService,
     private _router:Router) { 
-      this.employees = this._route.snapshot.data['employeeList'];
+      // this.employees = this._route.snapshot.data['employeeList'];
+      const resolvedData : Employees[] | string = this._route.snapshot.data['employeeList'];
+      if (Array.isArray(resolvedData)) {
+        this.employees = resolvedData;
+      } else {
+        this.error = resolvedData;
+        
+      }
+
       if (this._route.snapshot.queryParamMap.has('searchTerm')) {
         this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
       } else {

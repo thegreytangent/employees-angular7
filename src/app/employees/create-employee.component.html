@@ -2,7 +2,7 @@
 <div class="col-md-4">
 
   <form ngNativeValidate #employeeForm="ngForm" (ngSubmit)="saveEmployee();">
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" *ngIf="employee">
       <div class="panel-heading">
         <h3 class="panel-title">{{panel_title}}</h3>
       </div>
@@ -157,4 +157,4 @@ Angular Model: {{employeeForm.value | json }}
 Employee Model : {{employee | json}}
 
 <br><br>
-Password Group : {{passwordGroup.errors}}
+<!-- Password Group : {{passwordGroup.errors}} -->

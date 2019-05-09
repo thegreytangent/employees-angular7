@@ -19,10 +19,10 @@ export class CreateEmployeeComponent implements OnInit {
   isActive = true;
   previewImg = false;
   datePickerConfig: Partial<BsDatepickerConfig>;
-  panel_title : string;
+  panel_title: string;
 
   employee: Employees;
-  
+
   departments: Department[] = [
     { id: 1, name: 'IT' },
     { id: 2, name: 'HR' },
@@ -33,7 +33,7 @@ export class CreateEmployeeComponent implements OnInit {
 
 
   constructor(private _employeeService: EmployeeService,
-     private _router: Router, private _route: ActivatedRoute) {
+    private _router: Router, private _route: ActivatedRoute) {
     this.datePickerConfig = Object.assign({}, {
       containerClass: 'theme-dark-blue',
       minDate: new Date(2018, 0, 1),
@@ -71,16 +71,38 @@ export class CreateEmployeeComponent implements OnInit {
       this.createEmployeeForm.reset();
     } else {
       this.panel_title = 'Update Employee';
-      this.employee = Object.assign({},this._employeeService.getEmployee(id));
-      
+      // this.employee = Object.assign({},this._employeeService.getEmployee(id));
+      this._employeeService.getEmployee(id).subscribe(
+        (employee) => this.employee = employee,
+        (err: any) => console.log(err)
+      );
+
     }
   }
 
   saveEmployee(): void {
-    const newEmployee: Employees = Object.assign({},this.employee);
-    this._employeeService.save(newEmployee);
-    this.createEmployeeForm.reset()
-    this._router.navigate(['list']);
+    // const newEmployee: Employees = Object.assign({},this.employee);
+
+    if (this.employee.id == null) {
+      this._employeeService.addEmployee(this.employee).subscribe((data: Employees) => {
+        console.log(data);
+        this.createEmployeeForm.reset()
+        this._router.navigate(['list']);
+      },
+        (error: any) => console.log(error)
+      );
+    } else {
+      this._employeeService.updateEmployee(this.employee).subscribe(
+        () => {
+          this.createEmployeeForm.reset()
+          this._router.navigate(['list']);
+        },
+        (error: any) => console.log(error)
+      );
+    }
+
+
+
   }
 
   toggleImgPreview() {
